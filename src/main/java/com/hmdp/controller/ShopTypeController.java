@@ -16,8 +16,8 @@ import java.util.List;
  * 前端控制器
  * </p>
  *
- * @author 虎哥
- * @since 2021-12-22
+ * @author lfy
+ * @since 2025-3-18
  */
 @RestController
 @RequestMapping("/shop-type")
