@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.Duration;
 import java.util.Map;
 
+import static com.hmdp.utils.RedisConstants.LOGIN_USER_TTL;
+
 public class RefreshTokenInterceptor implements HandlerInterceptor {
 
     private StringRedisTemplate stringredisTemplate;
@@ -39,7 +41,7 @@ public class RefreshTokenInterceptor implements HandlerInterceptor {
         UserHolder.saveUser(userDTO);
 
         //刷新token有效期
-        stringredisTemplate.expire(key, Duration.ofMinutes(30));
+        stringredisTemplate.expire(key, Duration.ofMinutes(LOGIN_USER_TTL));
         return true;
     }
 

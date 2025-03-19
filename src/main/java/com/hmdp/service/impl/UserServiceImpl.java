@@ -24,8 +24,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
-import static com.hmdp.utils.RedisConstants.LOGIN_CODE_KEY;
-import static com.hmdp.utils.RedisConstants.LOGIN_USER_KEY;
+import static com.hmdp.utils.RedisConstants.*;
 import static com.hmdp.utils.SystemConstants.USER_NICK_NAME_PREFIX;
 
 /**
@@ -53,7 +52,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         //3.符合 生成验证码
         String code = RandomUtil.randomNumbers(6);
         //4.保存验证码到Redis
-        stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, code, Duration.ofMinutes(5));
+        stringRedisTemplate.opsForValue().set(LOGIN_CODE_KEY + phone, code, Duration.ofMinutes(LOGIN_CODE_TTL));
         //5.发送验证码
         log.debug("发送验证码成功，验证码： {}", code);
         //成功
@@ -92,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
                 CopyOptions.create().setIgnoreNullValue(true).setFieldValueEditor((fieldName, fieldValue) -> fieldValue.toString()));
         String tokenKey = LOGIN_USER_KEY + token;
         stringRedisTemplate.opsForHash().putAll(tokenKey, userMap);
-        stringRedisTemplate.expire(tokenKey, Duration.ofMinutes(30));
+        stringRedisTemplate.expire(tokenKey, Duration.ofMinutes(LOGIN_USER_TTL));
 //        session.setAttribute("user", BeanUtil.copyProperties(user, UserDTO.class));
         return Result.ok(token);
     }
