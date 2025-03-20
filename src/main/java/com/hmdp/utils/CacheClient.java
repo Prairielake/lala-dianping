@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.concurrent.ExecutorService;
@@ -22,6 +23,8 @@ import static com.hmdp.utils.RedisConstants.*;
 @Slf4j
 @Component
 public class CacheClient {
+
+    @Resource
     private final StringRedisTemplate stringRedisTemplate;
 
     public CacheClient(StringRedisTemplate stringRedisTemplate) {
