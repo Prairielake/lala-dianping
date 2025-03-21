@@ -2,8 +2,6 @@ package com.hmdp.utils;
 
 import cn.hutool.core.lang.UUID;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -22,7 +20,7 @@ public class SimpleRedisLock implements ILock {
     private static final DefaultRedisScript<Long> UNLOCK_SCRIPT;
     static {
         UNLOCK_SCRIPT = new DefaultRedisScript<>();
-        UNLOCK_SCRIPT.setLocation(new ClassPathResource("unlock.lua"));
+        UNLOCK_SCRIPT.setLocation(new ClassPathResource("lua/unlock.lua"));
         UNLOCK_SCRIPT.setResultType(Long.class);
     }
 
