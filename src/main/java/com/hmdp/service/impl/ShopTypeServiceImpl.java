@@ -42,7 +42,7 @@ public class ShopTypeServiceImpl extends ServiceImpl<ShopTypeMapper, ShopType> i
         String shopJson = stringRedisTemplate.opsForValue().get(key);
         //有则返回
         if (StrUtil.isNotBlank(shopJson)) {
-            ShopType shopType = BeanUtil.toBean(shopJson, ShopType.class);
+            List<ShopType> shopType = BeanUtil.copyToList(JSONUtil.parseArray(shopJson), ShopType.class);
             return Result.ok(shopType);
         }
         //无则查询数据库
